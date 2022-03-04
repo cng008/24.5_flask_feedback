@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+    <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">FeedBack</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="/">Home</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Up</button>
+                </li>
+              </ul>          
+          </div>
+        </div>
+      </nav>
+    
+    <div class="container mt-4">
+        <!-- alert when user/post has been added/deleted/info edited -->
+        {% for msg in get_flashed_messages() %}
+            <div class="alert alert-success" role="alert">{{msg}}</div>
+        {% endfor %}
+        <!-- end alert -->
+        <div>{% block content %}BODY CONTENT GOES HERE{% endblock %}</div>
+    </div>
+
+</body>
+</html>
