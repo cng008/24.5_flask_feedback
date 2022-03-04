@@ -15,11 +15,11 @@ def connect_db(app):
 class User(db.Model):
     __tablename__ = "users"
 
+    username = db.Column(db.String(20), primary_key=True)
+    password = db.Column(db.String, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(50), unique=True, nullable=False)
-    username = db.Column(db.String(20), primary_key=True)
-    password = db.Column(db.Text, nullable=False)
 
     @classmethod
     def register(cls, first, last, email, username, pwd):
@@ -27,7 +27,7 @@ class User(db.Model):
 
         hashed = bcrypt.generate_password_hash(pwd)
         # turn bytestring into normal (unicode utf8) string
-        hashed_utf8 = hashed.decode("utf8")
+        hashed_utf8 = hashed.decode("utf-8")
 
         # return instance of user w/username and hashed pwd
         return cls(first_name=first, last_name=last, email=email, username=username, password=hashed_utf8)

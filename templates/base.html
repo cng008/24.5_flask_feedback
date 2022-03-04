@@ -22,12 +22,18 @@
               </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+              {% if session['username'] %}
+              <li class="nav-item">
+                <a class="btn btn-link" href="/logout">Logout</a>
+              </li>
+              {% else %}
                 <li class="nav-item">
                   <a class="btn btn-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
                   <a class="btn btn-secondary btn-sm my-1" href="/register">Sign Up</a>
                 </li>
+              {% endif %}
               </ul>          
           </div>
         </div>
@@ -35,8 +41,8 @@
     
     <div class="container mt-4">
         <!-- alert when user/post has been added/deleted/info edited -->
-        {% for msg in get_flashed_messages() %}
-            <div class="alert alert-success" role="alert">{{msg}}</div>
+        {% for category, msg in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{category}}" role="alert">{{msg}}</div>
         {% endfor %}
         <!-- end alert -->
         <div>{% block content %}BODY CONTENT GOES HERE{% endblock %}</div>

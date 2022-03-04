@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
 from forms import UserForm, LoginForm
@@ -35,11 +35,12 @@ def create_user():
         email = form.email.data
         username = form.username.data
         password = form.password.data
-        new_user = User.register(first_name, last_name, email, username, password)
+        new_user = User.register(username, password, first_name, last_name, email)
 
         db.session.add(new_user)
         db.session.commit()
-        flash('Welcome! Your account was created (-:')
+        session['username'] = new_user.username
+        flash("Welcome! Your account was created (-:", "success")
         return redirect('/secret')
 
     return render_template('signup.html', form=form)
@@ -57,6 +58,8 @@ def auth_user():
 
         user = User.authenticate(username, password)
         if user:
+            flash(f"Welcome back, {user.username}!", "success")
+            session['username'] = user.username
             return redirect('/secret')
         else:
             form.username.errors = ['Invlaid username/password.']            
@@ -64,7 +67,18 @@ def auth_user():
     return render_template('login.html', form=form)
 
 
-@app.route('/secret', methods=["GET", "POST"])
+@app.route('/secret', methods=["GET"])
 def user_found():
     """Return the text “You made it!”"""
-    return ('You made it!')
+    if "username" not in session:
+        flash("Please login first!", "danger")
+        return redirect('/')
+    return render_template('list.html')
+
+
+@app.route('/logout')
+def logout():
+    """Clear any information from the session and redirect to /”"""
+    session.pop('username')
+    flash("You've been logged out.", "success")
+    return redirect('/')
