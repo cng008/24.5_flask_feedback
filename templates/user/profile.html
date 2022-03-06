@@ -3,8 +3,7 @@
 {% block content %}
 
 <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-<p>@{{ user.username }}</p>
-<p>{{ user.email }}</p>
+<p>@{{ user.username }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ user.email }}</p>
 
 <div class="mt-4">
     <h3>Feedback</h3>
@@ -27,7 +26,13 @@
     <p>This user has no posts!</p>
     {% endif %}        
 
+    {% if session['username'] == user.username %}
     <a href="/users/{{ user.username }}/feedback/add">add feedback</a>
+
+    <form action="/users/{{ user.username }}/delete" method="POST">
+        <button class="btn btn-link btn-sm text-danger my-5" style="border:none;padding:0;margin:0;"><small>delete my account</small></button>
+    </form>
+    {% endif %}
 
 </div>
 
