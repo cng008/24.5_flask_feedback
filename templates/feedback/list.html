@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}All Feedback{% endblock %}
+{% block content %}
+
+<div class="row">
+{% for feedback in feed %}
+<div class="col-6">
+<div class="card text-white bg-info mb-3" style="max-width: 30rem;">
+    <div class="card-header"><a href="/users/{{ feedback.user_id }}" class="text-decoration-none text-light">{{ feedback.user_id }}</a></div>
+        <div class="card-body">
+        <h4 class="card-title">{{ feedback.title }}</h4>
+        <p class="card-text">{{ feedback.content }}</p>
+    </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

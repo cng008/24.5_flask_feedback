@@ -17,12 +17,17 @@
       
           <div class="collapse navbar-collapse" id="navbarColor03">
             <ul class="navbar-nav me-auto">
+              {% if session['username'] %}
               <li class="nav-item">
-                <a class="nav-link active" href="/">Home</a>
+                <a class="nav-link active" href="/users/{{ session['username'] }}/feedback/add">Add Feedback</a>
               </li>
+              {% endif %}
             </ul>
             <ul class="navbar-nav ml-auto">
               {% if session['username'] %}
+              <li class="nav-item">
+                <a class="nav-link active" href="/users/{{ session['username'] }}">{{ session['username'] }}</a>
+              </li>
               <li class="nav-item">
                 <a class="btn btn-link" href="/logout">Logout</a>
               </li>

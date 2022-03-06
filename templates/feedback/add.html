@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}New Feedback{% endblock %}
+{% block content %}
+
+<h1>New Post</h1>
+<form action="/users/{{user.username}}/feedback/add" method="POST">
+    {% include "form.html" %}
+    <button type="submit" class="btn btn-primary btn-sm mt-3">Post</button>
+</form>
+
+{% endblock %}
